@@ -66,10 +66,7 @@ function initialiseSM(
   session.addListener("AddPartialTranscript", (result) => {
     console.log("AddPartialTranscript", JSON.stringify(result, null, 2));
     setPartialTranscript?.(
-      (transcript) =>
-        transcript +
-        " " +
-        result.results.map((r) => r.alternatives?.[0].content).join(" ")
+      result.results.map((r) => r.alternatives?.[0].content).join(" ")
     );
   });
 
