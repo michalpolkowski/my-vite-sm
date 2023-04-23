@@ -16,14 +16,23 @@ export function useSpeechmaticsRt({ apiKey, jwt }: UseSpeechmaticsRtParams) {
   const [transcript, setTranscript] = useState("");
   const [partialTranscript, setPartialTranscript] = useState("");
 
+  const [sessionHandlers, setSessionHandlers] =
+    useState<ReturnType<typeof initialiseSM>>();
+
+  useEffect(() => {
+    setSessionHandlers(
+      initialiseSM(
+        sm.current,
+        setIsConnected,
+        setTranscript,
+        setPartialTranscript,
+        jwt
+      )
+    );
+  }, [jwt]);
+
   return {
-    ...initialiseSM(
-      sm.current,
-      setIsConnected,
-      setTranscript,
-      setPartialTranscript,
-      jwt
-    ),
+    ...sessionHandlers,
     isConnected,
     transcript,
     partialTranscript,
